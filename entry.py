@@ -14,7 +14,7 @@
 #                           confirms entry success / failure (with error code)
 #                       3) Connection to MySQL database
 #                       4) INSERT statement to enter data to associated table.
-#    File: entry3.py
+#    File: entry.py
 ################################################################################
 import numpy as np
 import mysql.connector
@@ -112,7 +112,12 @@ class Asset_ENTRY():
               self.get_asset_purchase_cost())
 
         #POPUP CONFIRMATION WINDOW
-        warningMessage = "Asset Category: " + self.entryAsset_fk_asset_category_ID + "\nAsset Owner: " + self.entryAsset_owner + "\nAsset Name: " + self.entryAsset_name + "\nAsset Description: " + self.entryAsset_description + "\nDate Acquired: " + self.entryAsset_date_acquired + "\nPurchase Cost: " + self.entryAsset_purchase_cost
+        warningMessage = "Asset Category: " + self.entryAsset_fk_asset_category_ID
+        warningMessage += "\nAsset Owner: " + self.entryAsset_owner
+        warningMessage += "\nAsset Name: " + self.entryAsset_name
+        warningMessage += "\nAsset Description: " + self.entryAsset_description
+        warningMessage += "\nDate Acquired: " + self.entryAsset_date_acquired
+        warningMessage += "\nPurchase Cost: " + self.entryAsset_purchase_cost
         window = Tk()
         window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
         window.withdraw()
@@ -295,15 +300,21 @@ class BankAccount_ENTRY():
     def SUBMIT_BANK_ACCOUNT(self):
         ### THIS IS THE FUNCTION THAT WILL WRRITE THE MEMBER DATA OUT TO SQL
         print(self.get_bank_account_owner(),
-                      self.get_bank_account_type(),
-                      self.get_bank_account_brand(),
-                      self.get_bank_account_description(),
-                      self.get_bank_account_interest_rate(),
-                      self.get_bank_account_date_acquired(),
-                      self.get_bank_account_balance())
+              self.get_bank_account_type(),
+              self.get_bank_account_brand(),
+              self.get_bank_account_description(),
+              self.get_bank_account_interest_rate(),
+              self.get_bank_account_date_acquired(),
+              self.get_bank_account_balance())
 
         #POPUP CONFIRMATION WINDOW
-        warningMessage = "Bank Account Owner: " + self.entryBank_Account_owner + "\nBank Account Type: " + self.entryBank_Account_type + "\nBank Account Brand: " + self.entryBank_Account_brand + "\nBank Account Description: " + self.entryBank_Account_description + "\nInterest Rate: " + self.entryBank_Account_interest_rate + "\nDate Acquired: " + self.entryBank_Account_date_acquired + "\nAcount Balance: " + self.entryBank_Account_balance
+        warningMessage = "Bank Account Owner: " + self.entryBank_Account_owner
+        warningMessage += "\nBank Account Type: " + self.entryBank_Account_type
+        warningMessage += "\nBank Account Brand: " + self.entryBank_Account_brand
+        warningMessage += "\nBank Account Description: " + self.entryBank_Account_description
+        warningMessage += "\nInterest Rate: " + self.entryBank_Account_interest_rate
+        warningMessage += "\nDate Acquired: " + self.entryBank_Account_date_acquired
+        warningMessage += "\nAcount Balance: " + self.entryBank_Account_balance
         window = Tk()
         window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
         window.withdraw()
@@ -440,17 +451,25 @@ class BankTransaction_ENTRY():
     def SUBMIT_BANK_TRANSACTION(self):
         ### THIS IS THE FUNCTION THAT WILL WRRITE THE MEMBER DATA OUT TO SQL
         print(self.get_bank_transaction_fk_bank_account_ID(),
-                      self.get_bank_transaction_date(),
-                      self.get_bank_transaction_description(),
-                      self.get_bank_transaction_deposit(),
-                      self.get_bank_transaction_fk_asset_ID(),
-                      self.get_bank_transaction_fk_asset_category_ID(),
-                      self.get_bank_transaction_withdrawal(),
-                      self.get_bank_transaction_fk_liability_category_ID(),
-                      self.get_bank_transaction_fk_credit_card_ID())
+              self.get_bank_transaction_date(),
+              self.get_bank_transaction_description(),
+              self.get_bank_transaction_deposit(),
+              self.get_bank_transaction_fk_asset_ID(),
+              self.get_bank_transaction_fk_asset_category_ID(),
+              self.get_bank_transaction_withdrawal(),
+              self.get_bank_transaction_fk_liability_category_ID(),
+              self.get_bank_transaction_fk_credit_card_ID())
 
         #POPUP CONFIRMATION WINDOW
-        warningMessage = "Bank Account ID: " + self.entryBank_Transaction_fk_bank_account_ID + "\nTransacction Date: " + self.entryBank_Transaction_date + "\nTransaction Description: " + self.entryBank_Transaction_description + "\nDeposit: " + self.entryBank_Transaction_deposit + "\nAsset ID: " + self.entryBank_Transaction_fk_asset_ID + "\nAsset Category ID: " + self.entryBank_Transaction_fk_asset_category_ID + "\nWithdrawal: " + self.entryBank_Transaction_withdrawal + "\nLiability Category ID: " + self.entryBank_Transaction_fk_liability_category_ID + "\nCredit Card ID: " + self.entryBank_Transaction_fk_credit_card_ID
+        warningMessage = "Bank Account ID: " + self.entryBank_Transaction_fk_bank_account_ID
+        warningMessage += "\nTransacction Date: " + self.entryBank_Transaction_date
+        warningMessage += "\nTransaction Description: " + self.entryBank_Transaction_description
+        warningMessage += "\nDeposit: " + self.entryBank_Transaction_deposit
+        warningMessage += "\nAsset ID: " + self.entryBank_Transaction_fk_asset_ID
+        warningMessage += "\nAsset Category ID: " + self.entryBank_Transaction_fk_asset_category_ID
+        warningMessage += "\nWithdrawal: " + self.entryBank_Transaction_withdrawal
+        warningMessage += "\nLiability Category ID: " + self.entryBank_Transaction_fk_liability_category_ID
+        warningMessage += "\nCredit Card ID: " + self.entryBank_Transaction_fk_credit_card_ID
         window = Tk()
         window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
         window.withdraw()
@@ -614,16 +633,23 @@ class CreditCard_ENTRY():
     def SUBMIT_CREDIT_CARD(self):
         ### THIS IS THE FUNCTION THAT WILL WRRITE THE MEMBER DATA OUT TO SQL
         print(self.get_credit_card_owner(),
-                      self.get_credit_card_brand(),
-                      self.get_credit_card_description(),
-                      self.get_credit_card_interest_rate(),
-                      self.get_credit_card_date_acquired(),
-                      self.get_credit_card_date_expires(),
-                      self.get_credit_card_balance(),
-                      self.get_credit_card_credit_limit())
+              self.get_credit_card_brand(),
+              self.get_credit_card_description(),
+              self.get_credit_card_interest_rate(),
+              self.get_credit_card_date_acquired(),
+              self.get_credit_card_date_expires(),
+              self.get_credit_card_balance(),
+              self.get_credit_card_credit_limit())
 
         #POPUP CONFIRMATION WINDOW
-        warningMessage = "Credit Card Owner: " + self.entryCredit_Card_owner + "\nCredit Card Brand:  " + self.entryCredit_Card_brand + "\nCredit Card Description : " + self.entryCredit_Card_description + "\nCredit Card Interest Rate: " + self.entryCredit_Card_interest_rate + "\nDate Acquired: " + self.entryCredit_Card_date_acquired + "\nDate Expires: " + self.entryCredit_Card_date_expires + "\nCard Balance: " + self.entryCredit_Card_balance + "\nCredit Limit: " + self.entryCredit_Card_credit_limit
+        warningMessage = "Credit Card Owner: " + self.entryCredit_Card_owner
+        warningMessage += "\nCredit Card Brand:  " + self.entryCredit_Card_brand
+        warningMessage += "\nCredit Card Description : " + self.entryCredit_Card_description
+        warningMessage += "\nCredit Card Interest Rate: " + self.entryCredit_Card_interest_rate
+        warningMessage += "\nDate Acquired: " + self.entryCredit_Card_date_acquired
+        warningMessage += "\nDate Expires: " + self.entryCredit_Card_date_expires
+        warningMessage += "\nCard Balance: " + self.entryCredit_Card_balance
+        warningMessage += "\nCredit Limit: " + self.entryCredit_Card_credit_limit
         window = Tk()
         window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
         window.withdraw()
@@ -725,13 +751,17 @@ class CreditTransaction_ENTRY():
     def SUBMIT_CREDIT_TRANSACTION(self):
         ### THIS IS THE FUNCTION THAT WILL WRRITE THE MEMBER DATA OUT TO SQL
         print(self.get_credit_transaction_fk_credit_card_ID(),
-                      self.get_credit_transaction_description(),
-                      self.get_credit_transaction_fk_liability_category_ID(),
-                      self.get_credit_transaction_charge_date(),
-                      self.get_credit_transaction_charge())
+              self.get_credit_transaction_description(),
+              self.get_credit_transaction_fk_liability_category_ID(),
+              self.get_credit_transaction_charge_date(),
+              self.get_credit_transaction_charge())
 
         #POPUP CONFIRMATION WINDOW
-        warningMessage = "Credit Card ID: " + self.entryCredit_Transaction_fk_credit_card_ID + "\nCredit Transaction Description:  " + self.entryCredit_Transaction_description + "\nLiability Category: " + self.entryCredit_Transaction_fk_liability_category_ID + "\nTransaction Date: " + self.entryCredit_Transaction_charge_date + "\nCharge Amount: " + self.entryCredit_Transaction_charge
+        warningMessage = "Credit Card ID: " + self.entryCredit_Transaction_fk_credit_card_ID
+        warningMessage += "\nCredit Transaction Description:  " + self.entryCredit_Transaction_description
+        warningMessage += "\nLiability Category: " + self.entryCredit_Transaction_fk_liability_category_ID
+        warningMessage += "\nTransaction Date: " + self.entryCredit_Transaction_charge_date
+        warningMessage += "\nCharge Amount: " + self.entryCredit_Transaction_charge
         window = Tk()
         window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
         window.withdraw()

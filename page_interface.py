@@ -7,7 +7,7 @@
 #                 SUBMIT_x_ENTRY method that is used to retrieve the data
 #                 entered on each form and pass it to the entry3.py file for
 #                 further processing.
-#    File: page_interface3.py
+#    File: page_interface.py
 ################################################################################
 import mysql.connector
 from tkinter import *
