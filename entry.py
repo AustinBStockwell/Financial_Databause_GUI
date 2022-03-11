@@ -133,17 +133,17 @@ class Asset_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Stockwell_Financial',
+                                                 database='TEST',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
             mySql_insert_query = """INSERT INTO Asset (idAsset,
                                                       fk_asset_category_ID,
                                                       owner,
-                                                      name,
+                                                      asset,
                                                       description,
-                                                      date_acquired,
-                                                      purchase_cost,
+                                                      purchase_date,
+                                                      purchase_price,
                                                       sell_date,
                                                       sell_price)
                                    VALUES
@@ -208,7 +208,7 @@ class AssetCategory_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Stockwell_Financial',
+                                                 database='TEST',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
@@ -333,7 +333,7 @@ class BankAccount_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Stockwell_Financial',
+                                                 database='TEST',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
@@ -484,7 +484,7 @@ class BankTransaction_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Stockwell_Financial',
+                                                 database='TEST',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
@@ -656,7 +656,7 @@ class CreditCard_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Stockwell_Financial',
+                                                 database='TEST',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
@@ -768,7 +768,7 @@ class CreditTransaction_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Stockwell_Financial',
+                                                 database='TEST',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
@@ -814,7 +814,7 @@ class ExpenseCategory_ENTRY():
 
     def get_expense_category_name(self):
 
-        return self.entryInvestment_Account_name
+        return self.entryExpense_Category_name
 
     ######################################################################
 
@@ -834,12 +834,12 @@ class ExpenseCategory_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Stockwell_Financial',
+                                                 database='TEST',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
             mySql_insert_query = """INSERT INTO Expense_Category (idExpense_Category,
-                                        name)
+                                        category)
                                        VALUES
                                        (NULL, '%s') """ % (str(self.get_expense_category_name()))
             cursor = connection.cursor()
@@ -934,7 +934,7 @@ class InvestmentAccount_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Stockwell_Financial',
+                                                 database='TEST',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
