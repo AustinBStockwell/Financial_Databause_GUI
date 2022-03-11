@@ -23,8 +23,8 @@ class Stockwell_FinancialApp(tk.Tk):
         self.frames = {}
 
         for F in (StartPage, Asset, Asset_Category, Bank_Account,
-                    Bank_Transaction,Credit_Card, Credit_Transaction,
-                    Liability_Category):
+                    Bank_Transaction, Credit_Card, Credit_Transaction,
+                    Expense_Category, Investment_Account):
 
             frame = F(container, self)
 

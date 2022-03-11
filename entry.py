@@ -25,12 +25,12 @@ class Asset_ENTRY():
     def __init__(self):
         self.entryAsset_fk_asset_category_ID = np.nan
         self.entryAsset_owner                = np.nan
-        self.entryAsset_name                  = np.nan
-        self.entryAsset_description           = np.nan
-        self.entryAsset_date_acquired         = np.nan
-        self.entryAsset_purchase_cost         = np.nan
-        self.entryAsset_sell_date             = np.nan
-        self.entryAsset_sell_price            = np.nan
+        self.entryAsset_name                 = np.nan
+        self.entryAsset_description          = np.nan
+        self.entryAsset_purchase_date        = np.nan
+        self.entryAsset_purchase_price       = np.nan
+        self.entryAsset_sell_date            = np.nan
+        self.entryAsset_sell_price           = np.nan
         return
 
     #### Accessors and Mutators
@@ -50,11 +50,11 @@ class Asset_ENTRY():
         self.entryAsset_description = input
         return
 
-    def set_asset_date_acquired(self, input):
+    def set_asset_purchase_date(self, input):
         self.entryAsset_date_acquired = input
         return
 
-    def set_asset_purchase_cost(self, input):
+    def set_asset_purchase_price(self, input):
         self.entryAsset_purchase_cost = input
         return
 
@@ -84,13 +84,13 @@ class Asset_ENTRY():
 
         return self.entryAsset_description
 
-    def get_asset_date_acquired(self):
+    def get_asset_purchase_date(self):
 
-        return self.entryAsset_date_acquired
+        return self.entryAsset_purchase_date
 
-    def get_asset_purchase_cost(self):
+    def get_asset_purchase_price(self):
 
-        return self.entryAsset_purchase_cost
+        return self.entryAsset_purchase_price
 
     def get_asset_sell_date(self):
 
@@ -108,16 +108,21 @@ class Asset_ENTRY():
               self.get_asset_owner(),
               self.get_asset_name(),
               self.get_asset_description(),
-              self.get_asset_date_acquired(),
-              self.get_asset_purchase_cost())
+              self.get_asset_purchase_date(),
+              self.get_asset_purchase_price(),
+              self.get_asset_sell_date(),
+              self.get_asset_sell_price()
+              )
 
         #POPUP CONFIRMATION WINDOW
         warningMessage = "Asset Category: " + self.entryAsset_fk_asset_category_ID
         warningMessage += "\nAsset Owner: " + self.entryAsset_owner
         warningMessage += "\nAsset Name: " + self.entryAsset_name
         warningMessage += "\nAsset Description: " + self.entryAsset_description
-        warningMessage += "\nDate Acquired: " + self.entryAsset_date_acquired
-        warningMessage += "\nPurchase Cost: " + self.entryAsset_purchase_cost
+        warningMessage += "\nPurchase Date: " + self.entryAsset_purchase_date
+        warningMessage += "\nPurchase Price: " + self.entryAsset_purchase_cost
+        warningMessage += "\nSell Date: " + self.entryAsset_purchase_date
+        warningMessage += "\nSell Price: " + self.entryAsset_purchase_cost
         window = Tk()
         window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
         window.withdraw()
@@ -128,9 +133,9 @@ class Asset_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Test',
+                                                 database='Stockwell_Financial',
                                                  user='root',
-                                                 password='Supra777')
+                                                 password='Th3T3chBoy$')
 
             mySql_insert_query = """INSERT INTO Asset (idAsset,
                                                       fk_asset_category_ID,
@@ -142,12 +147,15 @@ class Asset_ENTRY():
                                                       sell_date,
                                                       sell_price)
                                    VALUES
-                                   (NULL, '%s', '%s', '%s', '%s', '%s', '%s', NULL, NULL)""" % (str(self.get_asset_fk_asset_cateogry_ID()),
+                                   (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', NULL, NULL)""" % (str(self.get_asset_fk_asset_cateogry_ID()),
                                                                                 str(self.get_asset_owner()),
                                                                                 str(self.get_asset_name()),
                                                                                 str(self.get_asset_description()),
-                                                                                str(self.get_asset_date_acquired()),
-                                                                                str(self.get_asset_purchase_cost()))
+                                                                                str(self.get_asset_purchase_date()),
+                                                                                str(self.get_asset_purchase_price()),
+                                                                                str(self.get_asset_sell_date()),
+                                                                                str(self.get_asset_sell_price())
+                                                                                )
             cursor = connection.cursor()
             cursor.execute(mySql_insert_query)
             connection.commit()
@@ -200,9 +208,9 @@ class AssetCategory_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Test',
+                                                 database='Stockwell_Financial',
                                                  user='root',
-                                                 password='Supra777')
+                                                 password='Th3T3chBoy$')
 
             mySql_insert_query = """INSERT INTO Asset_Category (idAsset_Category, name)
                                    VALUES
@@ -229,10 +237,10 @@ class BankAccount_ENTRY():
     def __init__(self):
         self.entryBank_Account_owner                = np.nan
         self.entryBank_Account_type                 = np.nan
-        self.entryBank_Account_brand                = np.nan
+        self.entryBank_Account_bank_name            = np.nan
+        self.entryBank_Account_account_number       = np.nan
         self.entryBank_Account_description          = np.nan
         self.entryBank_Account_interest_rate        = np.nan
-        self.entryBank_Account_date_acquired        = np.nan
         self.entryBank_Account_balance              = np.nan
         return
 
@@ -245,8 +253,12 @@ class BankAccount_ENTRY():
         self.entryBank_Account_type  = input
         return
 
-    def set_bank_account_brand(self, input):
-        self.entryBank_Account_brand = input
+    def set_bank_account_bank_name(self, input):
+        self.entryBank_Account_bank_name = input
+        return
+
+    def set_bank_account_account_number(self, input):
+        self.entryBank_Account_account_number  = input
         return
 
     def set_bank_account_description(self, input):
@@ -255,10 +267,6 @@ class BankAccount_ENTRY():
 
     def set_bank_account_interest_rate(self, input):
         self.entryBank_Account_interest_rate = input
-        return
-
-    def set_bank_account_date_acquired(self, input):
-        self.entryBank_Account_date_acquired = input
         return
 
     def set_bank_account_balance(self, input):
@@ -277,7 +285,7 @@ class BankAccount_ENTRY():
 
     def get_bank_account_brand(self):
 
-        return self.entryBank_Account_brand
+        return self.entryBank_Account_bank_name
 
     def get_bank_account_description(self):
 
@@ -310,7 +318,7 @@ class BankAccount_ENTRY():
         #POPUP CONFIRMATION WINDOW
         warningMessage = "Bank Account Owner: " + self.entryBank_Account_owner
         warningMessage += "\nBank Account Type: " + self.entryBank_Account_type
-        warningMessage += "\nBank Account Brand: " + self.entryBank_Account_brand
+        warningMessage += "\nBank Account Brand: " + self.entryBank_Account_bank_name
         warningMessage += "\nBank Account Description: " + self.entryBank_Account_description
         warningMessage += "\nInterest Rate: " + self.entryBank_Account_interest_rate
         warningMessage += "\nDate Acquired: " + self.entryBank_Account_date_acquired
@@ -325,9 +333,9 @@ class BankAccount_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Test',
+                                                 database='Stockwell_Financial',
                                                  user='root',
-                                                 password='Supra777')
+                                                 password='Th3T3chBoy$')
 
             mySql_insert_query = """INSERT INTO Bank_Account (idBank_Account, owner,
                                                             type, brand, description,
@@ -368,7 +376,7 @@ class BankTransaction_ENTRY():
         self.entryBank_Transaction_fk_asset_ID                       = np.nan
         self.entryBank_Transaction_fk_asset_category_ID              = np.nan
         self.entryBank_Transaction_withdrawal                        = np.nan
-        self.entryBank_Transaction_fk_liability_category_ID          = np.nan
+        self.entryBank_Transaction_fk_expense_category_ID          = np.nan
         self.entryBank_Transaction_fk_credit_card_ID                 = np.nan
         return
 
@@ -389,10 +397,6 @@ class BankTransaction_ENTRY():
         self.entryBank_Transaction_deposit = input
         return
 
-    def set_bank_transaction_fk_asset_ID(self, input):
-        self.entryBank_Transaction_fk_asset_ID = input
-        return
-
     def set_bank_transaction_fk_asset_category_ID(self, input):
         self.entryBank_Transaction_fk_asset_category_ID = input
         return
@@ -401,8 +405,8 @@ class BankTransaction_ENTRY():
         self.entryBank_Transaction_withdrawal = input
         return
 
-    def set_bank_transaction_fk_liability_category_ID(self, input):
-        self.entryBank_Transaction_fk_liability_category_ID = input
+    def set_bank_transaction_fk_expense_category_ID(self, input):
+        self.entryBank_Transaction_fk_expense_category_ID = input
         return
 
     def set_bank_transaction_fk_credit_card_ID(self, input):
@@ -439,9 +443,9 @@ class BankTransaction_ENTRY():
 
         return self.entryBank_Transaction_withdrawal
 
-    def get_bank_transaction_fk_liability_category_ID(self):
+    def get_bank_transaction_fk_expense_category_ID(self):
 
-        return self.entryBank_Transaction_fk_liability_category_ID
+        return self.entryBank_Transaction_fk_expense_category_ID
 
     def get_bank_transaction_fk_credit_card_ID(self):
 
@@ -457,7 +461,7 @@ class BankTransaction_ENTRY():
               self.get_bank_transaction_fk_asset_ID(),
               self.get_bank_transaction_fk_asset_category_ID(),
               self.get_bank_transaction_withdrawal(),
-              self.get_bank_transaction_fk_liability_category_ID(),
+              self.get_bank_transaction_fk_expense_category_ID(),
               self.get_bank_transaction_fk_credit_card_ID())
 
         #POPUP CONFIRMATION WINDOW
@@ -468,7 +472,7 @@ class BankTransaction_ENTRY():
         warningMessage += "\nAsset ID: " + self.entryBank_Transaction_fk_asset_ID
         warningMessage += "\nAsset Category ID: " + self.entryBank_Transaction_fk_asset_category_ID
         warningMessage += "\nWithdrawal: " + self.entryBank_Transaction_withdrawal
-        warningMessage += "\nLiability Category ID: " + self.entryBank_Transaction_fk_liability_category_ID
+        warningMessage += "\nExpense Category ID: " + self.entryBank_Transaction_fk_expense_category_ID
         warningMessage += "\nCredit Card ID: " + self.entryBank_Transaction_fk_credit_card_ID
         window = Tk()
         window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
@@ -480,40 +484,40 @@ class BankTransaction_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Test',
+                                                 database='Stockwell_Financial',
                                                  user='root',
-                                                 password='Supra777')
+                                                 password='Th3T3chBoy$')
 
             #THIS IS ENTERING WITHDRAWALS
             if(self.entryBank_Transaction_fk_asset_ID == "None") & (self.entryBank_Transaction_fk_asset_category_ID == "None"):
                     mySql_insert_query = """INSERT INTO Bank_Transaction (idBank_Transaction,
                                                 fk_bank_account_ID, date, description, deposit,
                                                 fk_asset_ID, fk_asset_category_ID, withdrawal,
-                                                fk_liability_category_ID, fk_credit_card_ID)
+                                                fk_expense_category_ID, fk_credit_card_ID)
                                                VALUES
                                                (NULL, '%s', '%s', '%s', 00.00, NULL, NULL, '%s', '%s', '%s') """ % (str(self.get_bank_transaction_fk_bank_account_ID()),
                                                                                                 str(self.get_bank_transaction_date()),
                                                                                                 str(self.get_bank_transaction_description()),
                                                                                                 str(self.get_bank_transaction_withdrawal()),
-                                                                                                str(self.get_bank_transaction_fk_liability_category_ID()),
+                                                                                                str(self.get_bank_transaction_fk_expense_category_ID()),
                                                                                                 str(self.get_bank_transaction_fk_credit_card_ID()))
             if(self.entryBank_Transaction_fk_asset_ID == "None") & (self.entryBank_Transaction_fk_asset_category_ID == "None") & (self.entryBank_Transaction_fk_credit_card_ID == "None"):
                     mySql_insert_query = """INSERT INTO Bank_Transaction (idBank_Transaction,
                                                 fk_bank_account_ID, date, description, deposit,
                                                 fk_asset_ID, fk_asset_category_ID, withdrawal,
-                                                fk_liability_category_ID, fk_credit_card_ID)
+                                                fk_expense_category_ID, fk_credit_card_ID)
                                                VALUES
                                                (NULL, '%s', '%s', '%s', 00.00, NULL, NULL, '%s', '%s', NULL) """ % (str(self.get_bank_transaction_fk_bank_account_ID()),
                                                                                                 str(self.get_bank_transaction_date()),
                                                                                                 str(self.get_bank_transaction_description()),
                                                                                                 str(self.get_bank_transaction_withdrawal()),
-                                                                                                str(self.get_bank_transaction_fk_liability_category_ID()))
+                                                                                                str(self.get_bank_transaction_fk_expense_category_ID()))
             #THIS IS ENTERING DEPOSITS
-            if(self.entryBank_Transaction_fk_liability_category_ID == "None") & (self.entryBank_Transaction_fk_credit_card_ID == "None"):
+            if(self.entryBank_Transaction_fk_expense_category_ID == "None") & (self.entryBank_Transaction_fk_credit_card_ID == "None"):
                     mySql_insert_query = """INSERT INTO Bank_Transaction (idBank_Transaction,
                                                     fk_bank_account_ID, date, description, deposit,
                                                     fk_asset_ID, fk_asset_category_ID, withdrawal,
-                                                    fk_liability_category_ID, fk_credit_card_ID)
+                                                    fk_expense_category_ID, fk_credit_card_ID)
                                                    VALUES
                                                    (NULL, '%s', '%s', '%s', '%s', '%s', '%s', 00.00, NULL, NULL) """ % (str(self.get_bank_transaction_fk_bank_account_ID()),
                                                                                                     str(self.get_bank_transaction_date()),
@@ -521,11 +525,11 @@ class BankTransaction_ENTRY():
                                                                                                     str(self.get_bank_transaction_deposit()),
                                                                                                     str(self.get_bank_transaction_fk_asset_ID()),
                                                                                                     str(self.get_bank_transaction_fk_asset_category_ID()))
-            if(self.entryBank_Transaction_fk_liability_category_ID == "None") & (self.entryBank_Transaction_fk_credit_card_ID == "None") & (self.entryBank_Transaction_fk_asset_ID == "None"):
+            if(self.entryBank_Transaction_fk_expense_category_ID == "None") & (self.entryBank_Transaction_fk_credit_card_ID == "None") & (self.entryBank_Transaction_fk_asset_ID == "None"):
                     mySql_insert_query = """INSERT INTO Bank_Transaction (idBank_Transaction,
                                                     fk_bank_account_ID, date, description, deposit,
                                                     fk_asset_ID, fk_asset_category_ID, withdrawal,
-                                                    fk_liability_category_ID, fk_credit_card_ID)
+                                                    fk_expense_category_ID, fk_credit_card_ID)
                                                    VALUES
                                                    (NULL, '%s', '%s', '%s', '%s', NULL, '%s', 00.00, NULL, NULL) """ % (str(self.get_bank_transaction_fk_bank_account_ID()),
                                                                                                     str(self.get_bank_transaction_date()),
@@ -577,14 +581,6 @@ class CreditCard_ENTRY():
 
     def set_credit_card_interest_rate(self, input):
         self.entryCredit_Card_interest_rate = input
-        return
-
-    def set_credit_card_date_acquired(self, input):
-        self.entryCredit_Card_date_acquired = input
-        return
-
-    def set_credit_card_date_expires(self, input):
-        self.entryCredit_Card_date_expires = input
         return
 
     def set_credit_card_balance(self, input):
@@ -660,9 +656,9 @@ class CreditCard_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Test',
+                                                 database='Stockwell_Financial',
                                                  user='root',
-                                                 password='Supra777')
+                                                 password='Th3T3chBoy$')
 
             mySql_insert_query = """INSERT INTO Credit_Card (idCredit_Card,
                                         owner, brand, description, interest_rate,
@@ -699,7 +695,7 @@ class CreditTransaction_ENTRY():
     def __init__(self):
         self.entryCredit_Transaction_fk_credit_card_ID           = np.nan
         self.entryCredit_Transaction_description                 = np.nan
-        self.entryCredit_Transaction_fk_liability_category_ID    = np.nan
+        self.entryCredit_Transaction_fk_expense_category_ID      = np.nan
         self.entryCredit_Transaction_charge_date                 = np.nan
         self.entryCredit_Transaction_charge                      = np.nan
         return
@@ -713,8 +709,8 @@ class CreditTransaction_ENTRY():
         self.entryCredit_Transaction_description  = input
         return
 
-    def set_credit_transaction_fk_liability_category_ID(self, input):
-        self.entryCredit_Transaction_fk_liability_category_ID = input
+    def set_credit_transaction_fk_expense_category_ID(self, input):
+        self.entryCredit_Transaction_fk_expense_category_ID = input
         return
 
     def set_credit_transaction_charge_date(self, input):
@@ -735,9 +731,9 @@ class CreditTransaction_ENTRY():
 
         return self.entryCredit_Transaction_description
 
-    def get_credit_transaction_fk_liability_category_ID(self):
+    def get_credit_transaction_fk_expense_category_ID(self):
 
-        return self.entryCredit_Transaction_fk_liability_category_ID
+        return self.entryCredit_Transaction_fk_expense_category_ID
 
     def get_credit_transaction_charge_date(self):
 
@@ -752,14 +748,14 @@ class CreditTransaction_ENTRY():
         ### THIS IS THE FUNCTION THAT WILL WRRITE THE MEMBER DATA OUT TO SQL
         print(self.get_credit_transaction_fk_credit_card_ID(),
               self.get_credit_transaction_description(),
-              self.get_credit_transaction_fk_liability_category_ID(),
+              self.get_credit_transaction_fk_expense_category_ID(),
               self.get_credit_transaction_charge_date(),
               self.get_credit_transaction_charge())
 
         #POPUP CONFIRMATION WINDOW
         warningMessage = "Credit Card ID: " + self.entryCredit_Transaction_fk_credit_card_ID
         warningMessage += "\nCredit Transaction Description:  " + self.entryCredit_Transaction_description
-        warningMessage += "\nLiability Category: " + self.entryCredit_Transaction_fk_liability_category_ID
+        warningMessage += "\nExpense Category: " + self.entryCredit_Transaction_fk_expense_category_ID
         warningMessage += "\nTransaction Date: " + self.entryCredit_Transaction_charge_date
         warningMessage += "\nCharge Amount: " + self.entryCredit_Transaction_charge
         window = Tk()
@@ -772,18 +768,18 @@ class CreditTransaction_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Test',
+                                                 database='Stockwell_Financial',
                                                  user='root',
-                                                 password='Supra777')
+                                                 password='Th3T3chBoy$')
 
 
             mySql_insert_query = """INSERT INTO Credit_Transaction (idCredit_Transaction,
                                         fk_credit_card_ID, description,
-                                        fk_liability_category_ID, charge_date, charge)
+                                        fk_expense_category_ID, charge_date, charge)
                                        VALUES
                                        (NULL, '%s', '%s', '%s', '%s', '%s') """ % (str(self.get_credit_transaction_fk_credit_card_ID()),
                                                                                         str(self.get_credit_transaction_description()),
-                                                                                        str(self.get_credit_transaction_fk_liability_category_ID()),
+                                                                                        str(self.get_credit_transaction_fk_expense_category_ID()),
                                                                                         str(self.get_credit_transaction_charge_date()),
                                                                                         str(self.get_credit_transaction_charge()))
             cursor = connection.cursor()
@@ -804,57 +800,161 @@ class CreditTransaction_ENTRY():
 
 
 ################################################################################
-class LiabilityCategory_ENTRY():
+class ExpenseCategory_ENTRY():
     def __init__(self):
-        self.entryLiability_Category_name = np.nan
+        self.entryExpense_Category_name = np.nan
         return
 
     #### Accessors and Mutators are legit
-    def set_liability_category_name(self, input):
-        self.entryLiability_Category_name = input
+    def set_expense_category_name(self, input):
+        self.entryExpense_Category_name = input
         return
 
     ######################################################################
 
-    def get_liability_category_name(self):
+    def get_expense_category_name(self):
 
-        return self.entryLiability_Category_name
+        return self.entryInvestment_Account_name
 
     ######################################################################
 
-    def SUBMIT_LIABILITY_CATEGORY(self):
+    def SUBMIT_EXPENSE_CATEGORY(self):
         ### THIS IS THE FUNCTION THAT WILL WRRITE THE MEMBER DATA OUT TO SQL
-        print(self.get_liability_category_name())
+        print(self.get_expense_category_name())
 
         #POPUP CONFIRMATION WINDOW
-        warningMessage = "Liability Category Name: " + self.entryLiability_Category_name
+        warningMessage = "Expense Category Name: " + self.entryExpense_Category_name
         window = Tk()
         window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
         window.withdraw()
-        messagebox.showwarning('Stockwell_Financial Database Liability Category Entry', warningMessage)
+        messagebox.showwarning('Stockwell_Financial Database Expense Category Entry', warningMessage)
         window.deiconify()
         window.destroy()
 
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='Test',
+                                                 database='Stockwell_Financial',
                                                  user='root',
-                                                 password='Supra777')
+                                                 password='Th3T3chBoy$')
 
-            mySql_insert_query = """INSERT INTO Liability_Category (idLiability_Category,
+            mySql_insert_query = """INSERT INTO Expense_Category (idExpense_Category,
                                         name)
                                        VALUES
-                                       (NULL, '%s') """ % (str(self.get_liability_category_name()))
+                                       (NULL, '%s') """ % (str(self.get_expense_category_name()))
             cursor = connection.cursor()
             cursor.execute(mySql_insert_query)
             connection.commit()
-            print(cursor.rowcount, "Record inserted successfully into Liability_Category table")
+            print(cursor.rowcount, "Record inserted successfully into Expense_Category table")
             cursor.close()
 
         except mysql.connector.Error as error:
-            messagebox.showwarning('WARNING: ', "Failed to insert data into Liability Category table.\nTry again.\nError Code: {}".format(error))
-            print("Failed to insert data into Liability_Category table {}".format(error))
+            messagebox.showwarning('WARNING: ', "Failed to insert data into Expense Category table.\nTry again.\nError Code: {}".format(error))
+            print("Failed to insert data into Expense_Category table {}".format(error))
+
+        finally:
+            if (connection.is_connected()):
+                connection.close()
+                print("MySQL connection is closed")
+        return
+
+
+
+################################################################################
+class InvestmentAccount_ENTRY():
+    def __init__(self):
+        self.entryInvestment_Account_owner          = np.nan
+        self.entryInvestment_Account_institution    = np.nan
+        self.entryInvestment_Account_type           = np.nan      
+        self.entryInvestment_Account_date_opened    = np.nan
+        self.entryInvestment_Account_balance        = np.nan        
+        return
+
+    #### Accessors and Mutators are legit
+    def set_investment_account_owner(self, input):
+        self.entryInvestment_Account_owner = input
+        return
+
+    def set_investment_account_institution(self, input):
+        self.entryInvestment_Account_institution = input
+        return
+
+    def set_investment_account_type(self, input):
+        self.entryInvestment_Account_type = input
+        return
+
+    def set_investment_account_date_opened(self, input):
+        self.entryInvestment_Account_date_opened = input
+        return
+
+    def set_investment_account_balance(self, input):
+        self.entryInvestment_Account_balance = input
+        return
+
+    ######################################################################
+    
+    def get_investment_account_owner(self):
+        return self.entryInvestment_Account_owner
+
+    def get_investment_account_institution(self):
+        return self.entryInvestment_Account_institution
+
+    def get_investment_account_type(self):
+        return self.entryInvestment_Account_type
+
+    def get_investment_account_date_opened(self):
+        return self.entryInvestment_Account_date_opened
+
+    def get_investment_account_balance(self):
+        return self.entryInvestment_Account_balance
+
+    ######################################################################
+
+    def SUBMIT_INVESTMENT_ACCOUNT(self):
+        ### THIS IS THE FUNCTION THAT WILL WRRITE THE MEMBER DATA OUT TO SQL
+        print(self.get_investment_account_owner(),
+                self.get_investment_account_institution(),
+                self.get_investment_account_type(),
+                self.get_investment_account_date_opened(),
+                self.get_investment_account_balance())
+
+        #POPUP CONFIRMATION WINDOW
+        warningMessage = "Investment Account Owner: " + self.entryInvestment_Account_owner
+        warningMessage += "\nInstitution:  " + self.entryInvestment_Account_institution
+        warningMessage += "\nType: " + self.entryInvestment_Account_type
+        warningMessage += "\nDate Opened: " + self.entryInvestment_Account_date_opened
+        warningMessage += "\nBalance: " + self.entryInvestment_Account_balance
+        window = Tk()
+        window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
+        window.withdraw()
+        messagebox.showwarning('Stockwell_Financial Database Investment Account Entry', warningMessage)
+        window.deiconify()
+        window.destroy()
+
+        #INPUTS ASSET DATA FROM GUI INTO MYSQL
+        try:
+            connection = mysql.connector.connect(host='localhost',
+                                                 database='Stockwell_Financial',
+                                                 user='root',
+                                                 password='Th3T3chBoy$')
+
+            mySql_insert_query = """INSERT INTO Investment_Account (idInvestment_Account,
+                                        owner, institution, type, date_opened, balance)
+                                       VALUES
+                                       (NULL, '%s', '%s', '%s', '%s', '%s') """ % (str(self.get_investment_account_owner()),
+                                                                                        str(self.get_investment_account_institution()),
+                                                                                        str(self.get_investment_account_type()),
+                                                                                        str(self.get_investment_account_date_opened()),
+                                                                                        str(self.get_investment_account_balance()))
+            cursor = connection.cursor()
+            cursor.execute(mySql_insert_query)
+            connection.commit()
+            print(cursor.rowcount, "Record inserted successfully into Investment_Account table")
+            cursor.close()
+
+        except mysql.connector.Error as error:
+            messagebox.showwarning('WARNING: ', "Failed to insert data into Investment Account table.\nTry again.\nError Code: {}".format(error))
+            print("Failed to insert data into Investment Account table {}".format(error))
 
         finally:
             if (connection.is_connected()):
