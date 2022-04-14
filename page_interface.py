@@ -118,7 +118,7 @@ class Asset(tk.Frame):
         entryAsset_sell_price = tk.Entry(self)
         entryAsset_sell_price.pack()
 
-        buttonAssetCommit      = tk.Button(self, text = 'Submit entries to Asset table',
+        buttonAssetCommit = tk.Button(self, text = 'Submit entries to Asset table',
                             command = lambda: SUBMIT_ASSET_ENTRY())
         buttonAssetCommit.pack()
 
@@ -261,7 +261,7 @@ class Bank_Transaction(tk.Frame):
         # GUI OBJECTS CREATION (LABELS, BUTTONS, MENUS, ETC)
         tk.Label(self,text="Bank Account ID").pack()
         varBank_Transaction_fk_bank_account_ID = StringVar(self)
-        varBank_Transaction_fk_bank_account_ID.set('(1) Austin Centier Saving')
+        varBank_Transaction_fk_bank_account_ID.set('(1) Centier Extra 3246')
         optionBank_Transaction_fk_bank_account_ID = tk.OptionMenu(self,
                                         varBank_Transaction_fk_bank_account_ID,
                                         '(1) Centier Extra 3246',
@@ -450,7 +450,7 @@ class Credit_Transaction(tk.Frame):
         # GUI OBJECTS CREATION (LABELS, BUTTONS, MENUS, ETC)
         tk.Label(self, text="Credit Card ID").pack()
         varCredit_Transaction_fk_credit_card_ID = StringVar(self)
-        varCredit_Transaction_fk_credit_card_ID.set('(1) Austin: Sweetwater') # default value
+        varCredit_Transaction_fk_credit_card_ID.set('(1) Austin: Discover') # default value
         optionCredit_Transaction_fk_credit_card_ID = OptionMenu(self,
                                         varCredit_Transaction_fk_credit_card_ID,
                                         '(1) Austin: Discover',

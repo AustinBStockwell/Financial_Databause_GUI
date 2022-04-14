@@ -51,11 +51,11 @@ class Asset_ENTRY():
         return
 
     def set_asset_purchase_date(self, input):
-        self.entryAsset_date_acquired = input
+        self.entryAsset_purchase_date = input
         return
 
     def set_asset_purchase_price(self, input):
-        self.entryAsset_purchase_cost = input
+        self.entryAsset_purchase_price = input
         return
 
     def set_asset_sell_date(self, input):
@@ -119,10 +119,10 @@ class Asset_ENTRY():
         warningMessage += "\nAsset Owner: " + self.entryAsset_owner
         warningMessage += "\nAsset Name: " + self.entryAsset_name
         warningMessage += "\nAsset Description: " + self.entryAsset_description
-        warningMessage += "\nPurchase Date: " + self.entryAsset_purchase_date
-        warningMessage += "\nPurchase Price: " + self.entryAsset_purchase_cost
-        warningMessage += "\nSell Date: " + self.entryAsset_purchase_date
-        warningMessage += "\nSell Price: " + self.entryAsset_purchase_cost
+        warningMessage += "\nPurchase Date: " + str(self.entryAsset_purchase_date)
+        warningMessage += "\nPurchase Price: " + self.entryAsset_purchase_price
+        warningMessage += "\nSell Date: " + str(self.entryAsset_sell_date)
+        warningMessage += "\nSell Price: " + self.entryAsset_sell_price
         window = Tk()
         window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
         window.withdraw()
@@ -147,7 +147,7 @@ class Asset_ENTRY():
                                                       sell_date,
                                                       sell_price)
                                    VALUES
-                                   (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', NULL, NULL)""" % (str(self.get_asset_fk_asset_cateogry_ID()),
+                                   (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')""" % (str(self.get_asset_fk_asset_cateogry_ID()),
                                                                                 str(self.get_asset_owner()),
                                                                                 str(self.get_asset_name()),
                                                                                 str(self.get_asset_description()),
@@ -212,7 +212,7 @@ class AssetCategory_ENTRY():
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
-            mySql_insert_query = """INSERT INTO Asset_Category (idAsset_Category, name)
+            mySql_insert_query = """INSERT INTO Asset_Category (idAsset_Category, category)
                                    VALUES
                                    (NULL, '%s')""" % (str(self.get_asset_category_name()))
             cursor = connection.cursor()
@@ -283,9 +283,13 @@ class BankAccount_ENTRY():
 
         return self.entryBank_Account_type
 
-    def get_bank_account_brand(self):
+    def get_bank_account_bank(self):
 
         return self.entryBank_Account_bank_name
+
+    def get_bank_account_number(self):
+
+        return self.entryBank_Account_account_number
 
     def get_bank_account_description(self):
 
@@ -294,10 +298,6 @@ class BankAccount_ENTRY():
     def get_bank_account_interest_rate(self):
 
         return self.entryBank_Account_interest_rate
-
-    def get_bank_account_date_acquired(self):
-
-        return self.entryBank_Account_date_acquired
 
     def get_bank_account_balance(self):
 
@@ -309,19 +309,19 @@ class BankAccount_ENTRY():
         ### THIS IS THE FUNCTION THAT WILL WRRITE THE MEMBER DATA OUT TO SQL
         print(self.get_bank_account_owner(),
               self.get_bank_account_type(),
-              self.get_bank_account_brand(),
+              self.get_bank_account_bank(),
+              self.get_bank_account_number(),
               self.get_bank_account_description(),
               self.get_bank_account_interest_rate(),
-              self.get_bank_account_date_acquired(),
               self.get_bank_account_balance())
 
         #POPUP CONFIRMATION WINDOW
         warningMessage = "Bank Account Owner: " + self.entryBank_Account_owner
         warningMessage += "\nBank Account Type: " + self.entryBank_Account_type
         warningMessage += "\nBank Account Brand: " + self.entryBank_Account_bank_name
+        warningMessage += "\nBank Account Number: " + self.entryBank_Account_account_number
         warningMessage += "\nBank Account Description: " + self.entryBank_Account_description
         warningMessage += "\nInterest Rate: " + self.entryBank_Account_interest_rate
-        warningMessage += "\nDate Acquired: " + self.entryBank_Account_date_acquired
         warningMessage += "\nAcount Balance: " + self.entryBank_Account_balance
         window = Tk()
         window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
@@ -338,16 +338,16 @@ class BankAccount_ENTRY():
                                                  password='Th3T3chBoy$')
 
             mySql_insert_query = """INSERT INTO Bank_Account (idBank_Account, owner,
-                                                            type, brand, description,
-                                                            interest_rate, date_acquired,
+                                                            type, bank, account, description,
+                                                            interest_rate,
                                                             balance)
                                        VALUES
                                        (NULL, '%s', '%s', '%s', '%s', '%s', '%s','%s') """ % (str(self.get_bank_account_owner()),
                                                                                         str(self.get_bank_account_type()),
-                                                                                        str(self.get_bank_account_brand()),
+                                                                                        str(self.get_bank_account_bank()),
+                                                                                        str(self.get_bank_account_number()),
                                                                                         str(self.get_bank_account_description()),
                                                                                         str(self.get_bank_account_interest_rate()),
-                                                                                        str(self.get_bank_account_date_acquired()),
                                                                                         str(self.get_bank_account_balance()))
             cursor = connection.cursor()
             cursor.execute(mySql_insert_query)
@@ -373,10 +373,9 @@ class BankTransaction_ENTRY():
         self.entryBank_Transaction_date                              = np.nan
         self.entryBank_Transaction_description                       = np.nan
         self.entryBank_Transaction_deposit                           = np.nan
-        self.entryBank_Transaction_fk_asset_ID                       = np.nan
         self.entryBank_Transaction_fk_asset_category_ID              = np.nan
         self.entryBank_Transaction_withdrawal                        = np.nan
-        self.entryBank_Transaction_fk_expense_category_ID          = np.nan
+        self.entryBank_Transaction_fk_expense_category_ID            = np.nan
         self.entryBank_Transaction_fk_credit_card_ID                 = np.nan
         return
 
@@ -431,10 +430,6 @@ class BankTransaction_ENTRY():
 
         return self.entryBank_Transaction_deposit
 
-    def get_bank_transaction_fk_asset_ID(self):
-
-        return self.entryBank_Transaction_fk_asset_ID
-
     def get_bank_transaction_fk_asset_category_ID(self):
 
         return self.entryBank_Transaction_fk_asset_category_ID
@@ -458,22 +453,20 @@ class BankTransaction_ENTRY():
               self.get_bank_transaction_date(),
               self.get_bank_transaction_description(),
               self.get_bank_transaction_deposit(),
-              self.get_bank_transaction_fk_asset_ID(),
               self.get_bank_transaction_fk_asset_category_ID(),
               self.get_bank_transaction_withdrawal(),
               self.get_bank_transaction_fk_expense_category_ID(),
               self.get_bank_transaction_fk_credit_card_ID())
 
         #POPUP CONFIRMATION WINDOW
-        warningMessage = "Bank Account ID: " + self.entryBank_Transaction_fk_bank_account_ID
+        warningMessage = "Bank Account ID: " + str(self.entryBank_Transaction_fk_bank_account_ID)
         warningMessage += "\nTransacction Date: " + self.entryBank_Transaction_date
         warningMessage += "\nTransaction Description: " + self.entryBank_Transaction_description
         warningMessage += "\nDeposit: " + self.entryBank_Transaction_deposit
-        warningMessage += "\nAsset ID: " + self.entryBank_Transaction_fk_asset_ID
-        warningMessage += "\nAsset Category ID: " + self.entryBank_Transaction_fk_asset_category_ID
+        warningMessage += "\nAsset Category ID: " + str(self.entryBank_Transaction_fk_asset_category_ID)
         warningMessage += "\nWithdrawal: " + self.entryBank_Transaction_withdrawal
-        warningMessage += "\nExpense Category ID: " + self.entryBank_Transaction_fk_expense_category_ID
-        warningMessage += "\nCredit Card ID: " + self.entryBank_Transaction_fk_credit_card_ID
+        warningMessage += "\nExpense Category ID: " + str(self.entryBank_Transaction_fk_expense_category_ID)
+        warningMessage += "\nCredit Card ID: " + str(self.entryBank_Transaction_fk_credit_card_ID)
         window = Tk()
         window.eval('tk::PlaceWindow %s center' % window.winfo_toplevel())
         window.withdraw()
@@ -489,53 +482,58 @@ class BankTransaction_ENTRY():
                                                  password='Th3T3chBoy$')
 
             #THIS IS ENTERING WITHDRAWALS
-            if(self.entryBank_Transaction_fk_asset_ID == "None") & (self.entryBank_Transaction_fk_asset_category_ID == "None"):
+            #CREDIT CARD PAYMENT
+            if(self.entryBank_Transaction_fk_asset_category_ID == "None"):
                     mySql_insert_query = """INSERT INTO Bank_Transaction (idBank_Transaction,
                                                 fk_bank_account_ID, date, description, deposit,
-                                                fk_asset_ID, fk_asset_category_ID, withdrawal,
+                                                fk_asset_category_ID, withdrawal,
                                                 fk_expense_category_ID, fk_credit_card_ID)
                                                VALUES
-                                               (NULL, '%s', '%s', '%s', 00.00, NULL, NULL, '%s', '%s', '%s') """ % (str(self.get_bank_transaction_fk_bank_account_ID()),
+                                               (NULL, '%s', '%s', '%s', 00.00, NULL, '%s', '%s', '%s') """ % (str(self.get_bank_transaction_fk_bank_account_ID()),
                                                                                                 str(self.get_bank_transaction_date()),
                                                                                                 str(self.get_bank_transaction_description()),
                                                                                                 str(self.get_bank_transaction_withdrawal()),
                                                                                                 str(self.get_bank_transaction_fk_expense_category_ID()),
                                                                                                 str(self.get_bank_transaction_fk_credit_card_ID()))
-            if(self.entryBank_Transaction_fk_asset_ID == "None") & (self.entryBank_Transaction_fk_asset_category_ID == "None") & (self.entryBank_Transaction_fk_credit_card_ID == "None"):
+            #BILL PAYMENT FROM BANK ACCOUNT
+            elif(self.entryBank_Transaction_fk_asset_category_ID == "None") & (self.entryBank_Transaction_fk_credit_card_ID == "None"):
                     mySql_insert_query = """INSERT INTO Bank_Transaction (idBank_Transaction,
                                                 fk_bank_account_ID, date, description, deposit,
-                                                fk_asset_ID, fk_asset_category_ID, withdrawal,
+                                                fk_asset_category_ID, withdrawal,
                                                 fk_expense_category_ID, fk_credit_card_ID)
                                                VALUES
-                                               (NULL, '%s', '%s', '%s', 00.00, NULL, NULL, '%s', '%s', NULL) """ % (str(self.get_bank_transaction_fk_bank_account_ID()),
+                                               (NULL, '%s', '%s', '%s', 00.00, NULL, '%s', '%s', NULL) """ % (str(self.get_bank_transaction_fk_bank_account_ID()),
                                                                                                 str(self.get_bank_transaction_date()),
                                                                                                 str(self.get_bank_transaction_description()),
                                                                                                 str(self.get_bank_transaction_withdrawal()),
                                                                                                 str(self.get_bank_transaction_fk_expense_category_ID()))
             #THIS IS ENTERING DEPOSITS
-            if(self.entryBank_Transaction_fk_expense_category_ID == "None") & (self.entryBank_Transaction_fk_credit_card_ID == "None"):
+            elif(self.entryBank_Transaction_fk_expense_category_ID == "None") & (self.entryBank_Transaction_fk_credit_card_ID == "None"):
                     mySql_insert_query = """INSERT INTO Bank_Transaction (idBank_Transaction,
                                                     fk_bank_account_ID, date, description, deposit,
-                                                    fk_asset_ID, fk_asset_category_ID, withdrawal,
+                                                    fk_asset_category_ID, withdrawal,
                                                     fk_expense_category_ID, fk_credit_card_ID)
                                                    VALUES
-                                                   (NULL, '%s', '%s', '%s', '%s', '%s', '%s', 00.00, NULL, NULL) """ % (str(self.get_bank_transaction_fk_bank_account_ID()),
-                                                                                                    str(self.get_bank_transaction_date()),
-                                                                                                    str(self.get_bank_transaction_description()),
-                                                                                                    str(self.get_bank_transaction_deposit()),
-                                                                                                    str(self.get_bank_transaction_fk_asset_ID()),
-                                                                                                    str(self.get_bank_transaction_fk_asset_category_ID()))
-            if(self.entryBank_Transaction_fk_expense_category_ID == "None") & (self.entryBank_Transaction_fk_credit_card_ID == "None") & (self.entryBank_Transaction_fk_asset_ID == "None"):
-                    mySql_insert_query = """INSERT INTO Bank_Transaction (idBank_Transaction,
-                                                    fk_bank_account_ID, date, description, deposit,
-                                                    fk_asset_ID, fk_asset_category_ID, withdrawal,
-                                                    fk_expense_category_ID, fk_credit_card_ID)
-                                                   VALUES
-                                                   (NULL, '%s', '%s', '%s', '%s', NULL, '%s', 00.00, NULL, NULL) """ % (str(self.get_bank_transaction_fk_bank_account_ID()),
+                                                   (NULL, '%s', '%s', '%s', '%s', '%s', 00.00, NULL, NULL) """ % (str(self.get_bank_transaction_fk_bank_account_ID()),
                                                                                                     str(self.get_bank_transaction_date()),
                                                                                                     str(self.get_bank_transaction_description()),
                                                                                                     str(self.get_bank_transaction_deposit()),
                                                                                                     str(self.get_bank_transaction_fk_asset_category_ID()))
+            
+            #IF WITHDARWAL AND DEPOSIT BOXES ARE FILLED OUT...
+            elif(self.entryBank_Transaction_fk_expense_category_ID != "None") & (self.entryBank_Transaction_fk_credit_card_ID != "None") & (self.entryBank_Transaction_fk_asset_category_ID !="None"):
+                    messagebox.showwarning('WARNING: ', "Failed to insert data into Bank Transaction table.\nTry again.\nError Code: ATTEMPTING TO WITHDRAWAL AND DEPOSIT")
+                    #mySql_insert_query = """INSERT INTO Bank_Transaction (idBank_Transaction,
+                    #                                fk_bank_account_ID, date, description, deposit,
+                    #                                fk_asset_ID, withdrawal,
+                    #                                fk_expense_category_ID, fk_credit_card_ID)
+                    #                               VALUES
+                    #                               (NULL, '%s', '%s', '%s', '%s', NULL, '%s', 00.00, NULL, NULL) """ % (str(self.get_bank_transaction_fk_bank_account_ID()),
+                    #                                                                                str(self.get_bank_transaction_date()),
+                    #                                                                                str(self.get_bank_transaction_description()),
+                    #                                                                                str(self.get_bank_transaction_deposit()),
+                    #                                                                                str(self.get_bank_transaction_fk_asset_category_ID()))
+            
             cursor = connection.cursor()
             cursor.execute(mySql_insert_query)
             connection.commit()
@@ -609,14 +607,6 @@ class CreditCard_ENTRY():
 
         return self.entryCredit_Card_interest_rate
 
-    def get_credit_card_date_acquired(self):
-
-        return self.entryCredit_Card_date_acquired
-
-    def get_credit_card_date_expires(self):
-
-        return self.entryCredit_Card_date_expires
-
     def get_credit_card_balance(self):
 
         return self.entryCredit_Card_balance
@@ -632,8 +622,6 @@ class CreditCard_ENTRY():
               self.get_credit_card_brand(),
               self.get_credit_card_description(),
               self.get_credit_card_interest_rate(),
-              self.get_credit_card_date_acquired(),
-              self.get_credit_card_date_expires(),
               self.get_credit_card_balance(),
               self.get_credit_card_credit_limit())
 
@@ -642,8 +630,6 @@ class CreditCard_ENTRY():
         warningMessage += "\nCredit Card Brand:  " + self.entryCredit_Card_brand
         warningMessage += "\nCredit Card Description : " + self.entryCredit_Card_description
         warningMessage += "\nCredit Card Interest Rate: " + self.entryCredit_Card_interest_rate
-        warningMessage += "\nDate Acquired: " + self.entryCredit_Card_date_acquired
-        warningMessage += "\nDate Expires: " + self.entryCredit_Card_date_expires
         warningMessage += "\nCard Balance: " + self.entryCredit_Card_balance
         warningMessage += "\nCredit Limit: " + self.entryCredit_Card_credit_limit
         window = Tk()
@@ -662,15 +648,13 @@ class CreditCard_ENTRY():
 
             mySql_insert_query = """INSERT INTO Credit_Card (idCredit_Card,
                                         owner, brand, description, interest_rate,
-                                        date_acquired, date_expires, balance,
+                                        balance,
                                         credit_limit)
                                        VALUES
-                                       (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s') """ % (str(self.get_credit_card_owner()),
+                                       (NULL, '%s', '%s', '%s', '%s', '%s', '%s') """ % (str(self.get_credit_card_owner()),
                                                                                         str(self.get_credit_card_brand()),
                                                                                         str(self.get_credit_card_description()),
                                                                                         str(self.get_credit_card_interest_rate()),
-                                                                                        str(self.get_credit_card_date_acquired()),
-                                                                                        str(self.get_credit_card_date_expires()),
                                                                                         str(self.get_credit_card_balance()),
                                                                                         str(self.get_credit_card_credit_limit()))
             cursor = connection.cursor()
