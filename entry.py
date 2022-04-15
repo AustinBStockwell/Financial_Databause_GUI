@@ -133,7 +133,7 @@ class Asset_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='TEST',
+                                                 database='Stockwell_Financial',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
@@ -208,7 +208,7 @@ class AssetCategory_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='TEST',
+                                                 database='Stockwell_Financial',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
@@ -333,7 +333,7 @@ class BankAccount_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='TEST',
+                                                 database='Stockwell_Financial',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
@@ -477,7 +477,7 @@ class BankTransaction_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='TEST',
+                                                 database='Stockwell_Financial',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
@@ -642,7 +642,7 @@ class CreditCard_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='TEST',
+                                                 database='Stockwell_Financial',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
@@ -737,9 +737,9 @@ class CreditTransaction_ENTRY():
               self.get_credit_transaction_charge())
 
         #POPUP CONFIRMATION WINDOW
-        warningMessage = "Credit Card ID: " + self.entryCredit_Transaction_fk_credit_card_ID
+        warningMessage = "Credit Card ID: " + str(self.entryCredit_Transaction_fk_credit_card_ID)
         warningMessage += "\nCredit Transaction Description:  " + self.entryCredit_Transaction_description
-        warningMessage += "\nExpense Category: " + self.entryCredit_Transaction_fk_expense_category_ID
+        warningMessage += "\nExpense Category: " + str(self.entryCredit_Transaction_fk_expense_category_ID)
         warningMessage += "\nTransaction Date: " + self.entryCredit_Transaction_charge_date
         warningMessage += "\nCharge Amount: " + self.entryCredit_Transaction_charge
         window = Tk()
@@ -752,7 +752,7 @@ class CreditTransaction_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='TEST',
+                                                 database='Stockwell_Financial',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
@@ -818,7 +818,7 @@ class ExpenseCategory_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='TEST',
+                                                 database='Stockwell_Financial',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
@@ -918,7 +918,7 @@ class InvestmentAccount_ENTRY():
         #INPUTS ASSET DATA FROM GUI INTO MYSQL
         try:
             connection = mysql.connector.connect(host='localhost',
-                                                 database='TEST',
+                                                 database='Stockwell_Financial',
                                                  user='root',
                                                  password='Th3T3chBoy$')
 

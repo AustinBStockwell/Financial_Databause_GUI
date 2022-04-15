@@ -454,7 +454,7 @@ class Credit_Transaction(tk.Frame):
         optionCredit_Transaction_fk_credit_card_ID = OptionMenu(self,
                                         varCredit_Transaction_fk_credit_card_ID,
                                         '(1) Austin: Discover',
-                                        '(2) Austin CHASE Freedom',
+                                        '(2) Austin: CHASE Freedom',
                                         '(3) Belle: CHASE Freedom',
                                         '(4) Belle: EXPRESS')
         optionCredit_Transaction_fk_credit_card_ID.pack()
