@@ -137,7 +137,27 @@ class Asset_ENTRY():
                                                  user='root',
                                                  password='Th3T3chBoy$')
 
-            mySql_insert_query = """INSERT INTO Asset (idAsset,
+            if(self.entryAsset_sell_price == "" and self.entryAsset_sell_date == ""):
+                mySql_insert_query = """INSERT INTO Asset (idAsset,
+                                        fk_asset_category_ID,
+                                        owner,
+                                        asset,
+                                        description,
+                                        purchase_date,
+                                        purchase_price,
+                                        sell_date,
+                                        sell_price)
+                    VALUES
+                    (NULL, '%s', '%s', '%s', '%s', '%s', '%s', NULL, NULL)""" % (str(self.get_asset_fk_asset_cateogry_ID()),
+                                                                str(self.get_asset_owner()),
+                                                                str(self.get_asset_name()),
+                                                                str(self.get_asset_description()),
+                                                                str(self.get_asset_purchase_date()),
+                                                                str(self.get_asset_purchase_price()),
+                                                                )
+
+            else:
+                mySql_insert_query = """INSERT INTO Asset (idAsset,
                                                       fk_asset_category_ID,
                                                       owner,
                                                       asset,
