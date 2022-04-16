@@ -482,7 +482,7 @@ class BankTransaction_ENTRY():
                                                  password='Th3T3chBoy$')
 
             #THIS IS ENTERING WITHDRAWALS
-            #CREDIT CARD PAYMENT
+            #WITHDRAWAL
             if(self.entryBank_Transaction_fk_asset_category_ID == "None"):
                     mySql_insert_query = """INSERT INTO Bank_Transaction (idBank_Transaction,
                                                 fk_bank_account_ID, date, description, deposit,
@@ -495,8 +495,8 @@ class BankTransaction_ENTRY():
                                                                                                 str(self.get_bank_transaction_withdrawal()),
                                                                                                 str(self.get_bank_transaction_fk_expense_category_ID()),
                                                                                                 str(self.get_bank_transaction_fk_credit_card_ID()))
-            #BILL PAYMENT FROM BANK ACCOUNT
-            elif(self.entryBank_Transaction_fk_asset_category_ID == "None") & (self.entryBank_Transaction_fk_credit_card_ID == "None"):
+            #WITHDRAWAL -- BILL PAYMENT 
+            if(self.entryBank_Transaction_fk_asset_category_ID == "None") and (self.entryBank_Transaction_fk_credit_card_ID == "None"):
                     mySql_insert_query = """INSERT INTO Bank_Transaction (idBank_Transaction,
                                                 fk_bank_account_ID, date, description, deposit,
                                                 fk_asset_category_ID, withdrawal,
@@ -507,8 +507,8 @@ class BankTransaction_ENTRY():
                                                                                                 str(self.get_bank_transaction_description()),
                                                                                                 str(self.get_bank_transaction_withdrawal()),
                                                                                                 str(self.get_bank_transaction_fk_expense_category_ID()))
-            #THIS IS ENTERING DEPOSITS
-            elif(self.entryBank_Transaction_fk_expense_category_ID == "None") & (self.entryBank_Transaction_fk_credit_card_ID == "None"):
+            #DEPOSIT
+            if(self.entryBank_Transaction_fk_expense_category_ID == "None") and (self.entryBank_Transaction_fk_credit_card_ID == "None"):
                     mySql_insert_query = """INSERT INTO Bank_Transaction (idBank_Transaction,
                                                     fk_bank_account_ID, date, description, deposit,
                                                     fk_asset_category_ID, withdrawal,
@@ -521,18 +521,8 @@ class BankTransaction_ENTRY():
                                                                                                     str(self.get_bank_transaction_fk_asset_category_ID()))
             
             #IF WITHDARWAL AND DEPOSIT BOXES ARE FILLED OUT...
-            elif(self.entryBank_Transaction_fk_expense_category_ID != "None") & (self.entryBank_Transaction_fk_credit_card_ID != "None") & (self.entryBank_Transaction_fk_asset_category_ID !="None"):
+            if(self.entryBank_Transaction_fk_expense_category_ID != "None") and (self.entryBank_Transaction_fk_asset_category_ID !="None"):
                     messagebox.showwarning('WARNING: ', "Failed to insert data into Bank Transaction table.\nTry again.\nError Code: ATTEMPTING TO WITHDRAWAL AND DEPOSIT")
-                    #mySql_insert_query = """INSERT INTO Bank_Transaction (idBank_Transaction,
-                    #                                fk_bank_account_ID, date, description, deposit,
-                    #                                fk_asset_ID, withdrawal,
-                    #                                fk_expense_category_ID, fk_credit_card_ID)
-                    #                               VALUES
-                    #                               (NULL, '%s', '%s', '%s', '%s', NULL, '%s', 00.00, NULL, NULL) """ % (str(self.get_bank_transaction_fk_bank_account_ID()),
-                    #                                                                                str(self.get_bank_transaction_date()),
-                    #                                                                                str(self.get_bank_transaction_description()),
-                    #                                                                                str(self.get_bank_transaction_deposit()),
-                    #                                                                                str(self.get_bank_transaction_fk_asset_category_ID()))
             
             cursor = connection.cursor()
             cursor.execute(mySql_insert_query)

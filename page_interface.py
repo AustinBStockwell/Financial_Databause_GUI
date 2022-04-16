@@ -345,7 +345,7 @@ class Bank_Transaction(tk.Frame):
                                         varBank_Transaction_fk_credit_card_ID,
                                         "None",
                                         '(1) Austin: Discover',
-                                        '(2) Austin CHASE Freedom',
+                                        '(2) Austin: CHASE Freedom',
                                         '(3) Belle: CHASE Freedom',
                                         '(4) Belle: EXPRESS')
         optionBank_Transaction_fk_credit_card_ID.pack()
